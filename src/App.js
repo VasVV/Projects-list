@@ -50,7 +50,7 @@ export default function App() {
       currProjectName,
       programmerProperties
     };
-    axios.post('/sendmail',  params )
+    axios.post('https://projectslist.herokuapp.com/sendmail' || 'http://localhost:4242/sendmail',  params )
   }
 
   const addProgrammerForm = async e => {
