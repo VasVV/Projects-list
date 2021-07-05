@@ -35,8 +35,8 @@ console.log(information);
 
  
   let info = await transporter.sendMail({
-    from: '" 👻" <noreply@example.com>', // sender address
-    to: 'radioheadboy0@gmail.com', 
+    from: '" 👻" <noreply@example.com>', 
+    to: information.currProjectHeadEmail, 
     subject: "Новый програмист присоединился к вашему проекту", 
     text: `К вашему проекту ${information.currProjectName} присоединился новый программист ${information.programmerProperties.programmerName}. Он обладает следующими навыками: ${information.programmerProperties.programmerSkills} и хочет работать над ${information.programmerProperties.programmerWishes}. C ним можно связаться ${information.programmerProperties.programmerContact}`, 
   });
