@@ -1,7 +1,7 @@
 
 import './App.css';
 
-import {Button, Modal, makeStyles, TextField, Card, CardActions, CardContent} from '@material-ui/core/';
+import {Button, Modal, TextField, Card,  CardContent} from '@material-ui/core/';
 import AddIcon from '@material-ui/icons/Add';
 
 import {useState, useEffect} from 'react';
@@ -33,7 +33,8 @@ export default function App() {
       projectHeadName: '',
       projectChat: '',
       projectSpecialists: '',
-      projectLanguages: ''
+      projectLanguages: '',
+      ProjectParticipants: []
     }
   );
 
@@ -49,7 +50,7 @@ export default function App() {
       currProjectName,
       programmerProperties
     };
-    axios.post('http://localhost:4242/sendmail',  params )
+    axios.post('/sendmail',  params )
   }
 
   const addProgrammerForm = async e => {
@@ -115,6 +116,7 @@ export default function App() {
             color="primary"
             startIcon={<AddIcon />}
             onClick={() => setShowAddProject(true)}
+            className='app__addproject__btn'
             >
               Добавить новый проект
             </Button>
@@ -132,14 +134,14 @@ export default function App() {
             Закрыть
           </Button>
          
-          <TextField label="Название проекта" name='projectName' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)} />
-          <TextField label="Описание проекта" name='projectDescription' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
-          <TextField label="Имя руководителя проекта" name='projectHeadName'  className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
-          <TextField label="E-mail руководителя проекта" name='projectHeadEmail' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
-          <TextField label="Контакт руководителя проекта" name='projectHeadContact'  className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
-          <TextField label="Чат проекта" name='projectChat'  className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
-          <TextField label="Требуемые специалисты в проект" name='projectSpecialists' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
-          <TextField label="Языки, используемые в проекте" name='projectLanguages' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
+          <TextField required label="Название проекта" name='projectName' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)} />
+          <TextField required label="Описание проекта" name='projectDescription' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
+          <TextField required label="Имя руководителя проекта" name='projectHeadName'  className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
+          <TextField required label="E-mail руководителя проекта" name='projectHeadEmail' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
+          <TextField required label="Контакт руководителя проекта" name='projectHeadContact'  className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
+          <TextField required label="Чат проекта" name='projectChat'  className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
+          <TextField required label="Требуемые специалисты в проект" name='projectSpecialists' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
+          <TextField required label="Языки, используемые в проекте" name='projectLanguages' className='app__addproject__modal__form__inner__field' onChange={(e) => handleChange(e)}/>
           <Button 
             color="primary"
             type="submit"
@@ -165,9 +167,10 @@ export default function App() {
                   <p>Руководитель проекта: {e[0].projectHeadName}</p>
                   <p>Контакт руководителя проекта: {e[0].projectHeadContact}</p>
                   <p>Чат проекта: {e[0].projectChat}</p>
-                  <p>Участники: {e[0].ProjectParticipants.map(e => `Имя: ${e.programmerName} Контакт: ${e.programmerContact}`).join(', ')}</p>
+                  <p>Участники: {e[0].ProjectParticipants.length > 0 ? e[0].ProjectParticipants.map(e => `Имя: ${e.programmerName} Контакт: ${e.programmerContact}`).join(', ') : 'Пока что участников нет'}     </p>
                   <Button
                    color="primary"
+                   variant="contained"
                    onClick={() => currSave( e[1], e[0].projectHeadEmail, e[0].projectName)}>
                     Хочу принять участие в проекте 
                   </Button>
@@ -190,12 +193,12 @@ export default function App() {
             Закрыть
           </Button>
          
-          <TextField label="Имя программиста" name='programmerName' className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)} />
-          <TextField label="Как можно связаться" name='programmerContact' className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
-          <TextField label="О себе" name='programmerPersonality'  className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
-          <TextField label="Скиллы" name='programmerSkills' className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
-          <TextField label="Языки программирование" name='programmerLanguages'  className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
-          <TextField label="С чем хотелось бы работать?" name='programmerWishes'  className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
+          <TextField required label="Имя программиста" name='programmerName' className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)} />
+          <TextField required label="Как можно связаться" name='programmerContact' className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
+          <TextField required label="О себе" name='programmerPersonality'  className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
+          <TextField required label="Скиллы" name='programmerSkills' className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
+          <TextField required label="Языки программирования" name='programmerLanguages'  className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
+          <TextField required label="С чем хотелось бы работать?" name='programmerWishes'  className='app__projectslist__modal__form__inner__field' onChange={(e) => handleChangeProgrammer(e)}/>
           <Button 
             color="primary"
             type="submit"
