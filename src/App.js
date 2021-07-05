@@ -55,18 +55,22 @@ export default function App() {
 
   const addProgrammerForm = async e => {
    e.preventDefault();
-   await db.collection('programmers').add(programmerProperties);
-   
+   if (Object.values(programmerProperties).every(e => e)) {
+    await db.collection('programmers').add(programmerProperties);
+    
 
 
-   const projectRef = await db.collection('projects').doc(currProject).get();
-   const data = await projectRef.data();
-   data.ProjectParticipants.push(programmerProperties);
-   await db.collection('projects').doc(currProject).set(data);
-   
-   getProjects();
-   sendMail();
-   setShowAddProgrammer(false);
+    const projectRef = await db.collection('projects').doc(currProject).get();
+    const data = await projectRef.data();
+    data.ProjectParticipants.push(programmerProperties);
+    await db.collection('projects').doc(currProject).set(data);
+    
+    getProjects();
+    sendMail();
+    setShowAddProgrammer(false);
+  } else {
+    alert('Пожалуйста, заполните все поля')
+  }
    
    
     }
@@ -95,9 +99,13 @@ export default function App() {
 
   const formSubmit = async e => {
     e.preventDefault();
-    await db.collection('projects').add(projectProperties);
-    getProjects();
-    setShowAddProject(false);
+    if (Object.values(projectProperties).every(e => e)) {
+      await db.collection('projects').add(projectProperties);
+      getProjects();
+      setShowAddProject(false);
+      } else {
+        alert('Пожалуйста, заполните все поля');
+      }
   }
 
   const currSave = (id, email, projectName) => {
