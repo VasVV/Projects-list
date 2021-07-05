@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-const axios = require('axios');
 const express = require('express');
 const app = express();
 
