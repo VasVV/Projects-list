@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const express = require('express');
 const app = express();
 const multiparty = require('multiparty');
+const path = require('path');
 
 const cors = require('cors');
 
@@ -75,5 +76,5 @@ console.log(information);
   res.send('message sent!')
   
 })
-
+app.use(express.static(path.join(__dirname, '../build')));
 app.listen(process.env.PORT || 4242, () => console.log(`Node server listening on port ${process.env.PORT}!`));
