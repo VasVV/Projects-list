@@ -77,4 +77,5 @@ console.log(information);
   
 })
 app.use(express.static(path.join(__dirname, '../build')));
+
 app.listen(process.env.PORT || 4242, () => console.log(`Node server listening on port ${process.env.PORT}!`));

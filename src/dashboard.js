@@ -61,7 +61,7 @@ export default function Dashboard() {
         currProjectName,
         programmerProperties
       };
-      axios.post( 'http://localhost:4242/sendmail',  params )
+      axios.post(`${window.location.origin}/sendmail`,  params )
     }
   
     const addProgrammerForm = async e => {
