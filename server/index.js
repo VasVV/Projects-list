@@ -75,5 +75,5 @@ console.log(information);
   res.send('message sent!')
   
 })
-console.log(process.env);
-app.listen(8000, () => console.log(`Node server listening on port ${process.env.PORT}!`));
+
+app.listen(process.env.PORT || 4242, () => console.log(`Node server listening on port ${process.env.PORT}!`));
