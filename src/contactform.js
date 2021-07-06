@@ -3,9 +3,13 @@ import {useState, useEffect} from 'react';
 import {db} from './firebase';
 import axios from 'axios';
 import {Button, Modal, TextField, Card,  CardContent, Select, InputLabel, MenuItem} from '@material-ui/core/';
-
+import Alert from '@material-ui/lab/Alert';
 
 export default function ContactForm() {
+
+    const [formSent, setFormSent] = useState(false);
+    const [formErr, setFormErr] = useState(false);
+
     const [contactFormData, setContactFormData] = useState({
         yourName: '',
         yourIdea: '',
@@ -34,24 +38,27 @@ export default function ContactForm() {
         let headEmails = [];
         projectsRef.forEach(doc => headEmails.push(doc.data()));
         headEmails = headEmails.map(e => e.projectHeadEmail).join(', ');
-        console.log(headEmails);
-        let params = {
-            headEmails,
-            contactFormData
-        };
-        // let formData = new FormData();
-        // formData.append("file", new Blob([params]));
-        // formData.append("data", contactFormData.yourFile);
-        // console.log(formData)
+       
 
-    axios.post('http://localhost:4242/sendContactForm', params);
+        const formData = new FormData();
+        formData.append("file", contactFormData.yourFile);
+        formData.append("data", [contactFormData.yourName, contactFormData.yourIdea, contactFormData.yourRequestType, contactFormData.yourContact, [headEmails]]);
+        
 
-    // axios({
-    //     method: "post",
-    //     url: "myurl",
-    //     data: bodyFormData,
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   })
+    
+
+    axios({
+        method: "post",
+        url: `${window.location.origin}/sendContactForm`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(res => {
+        if (res.status == 200) {
+          setFormSent(true);
+        }
+      }).catch(err => { 
+        setFormErr(true);
+      })
 
        
     }
@@ -64,6 +71,8 @@ export default function ContactForm() {
 
         <p>Будем искренне благодарны за обратную связь!</p>
             <div className='app__contactform__form__inner__wrapper'>
+              {formSent && <Alert severity="success">Сообщение отправлено!</Alert>}
+              {formErr && <Alert severity="error">Сообщение не отправлено!</Alert>}
             <InputLabel id="demo-simple-select-label">Тип обращения</InputLabel>
             <Select
           name='yourRequestType'

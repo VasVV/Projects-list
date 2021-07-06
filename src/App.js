@@ -3,6 +3,7 @@ import './App.css';
 import About from './about';
 import Dashboard from './dashboard';
 import ProjectDetails from './projectdetails';
+import Teams from './teams';
 
 import {Button, Modal, TextField, Card,  CardContent} from '@material-ui/core/';
 import AddIcon from '@material-ui/icons/Add';
@@ -30,7 +31,7 @@ export default function App() {
       <div className="app__nav">
       <Link to="/dashboard"><Button>Главная страница</Button></Link>
       <Link to='/about'><Button>Цели и ценности</Button></Link>
-      <Button>Команды</Button>
+      <Link to='/teams'><Button>Команды</Button></Link>
       <Link to='/contactform'><Button>Форма обратной связи</Button></Link>
       </div>
       <Switch>
@@ -45,6 +46,9 @@ export default function App() {
           </Route>
           <Route path='/contactform'>
               <ContactForm />
+          </Route>
+          <Route path='/teams'>
+            <Teams />
           </Route>
           <Route exact path="/">
             <Dashboard />
